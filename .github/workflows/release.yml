@@ -35,6 +35,6 @@ jobs:
               echo "$name@$version is already on npm — skipping"
             else
               echo "Publishing $name@$version"
-              npm publish --workspace "$dir"
+              npm publish --workspace "$dir" --loglevel verbose
             fi
           done
