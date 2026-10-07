@@ -1,0 +1,17 @@
+{
+  "name": "parley-js",
+  "private": true,
+  "description": "Client SDKs for Parley website assistants: the embeddable widget and React bindings.",
+  "workspaces": [
+    "packages/widget",
+    "packages/react"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm test --workspaces",
+    "typecheck": "npm run typecheck --workspaces"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

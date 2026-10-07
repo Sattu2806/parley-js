@@ -1,0 +1,59 @@
+{
+  "name": "parley-react",
+  "version": "1.0.1",
+  "description": "React component for the Parley website assistant.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "jsdom": "^29.1.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.3"
+  },
+  "author": "Satender Maurya",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sattu2806/parley-js.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/Sattu2806/parley-js/tree/main/packages/react#readme",
+  "keywords": [
+    "react",
+    "nextjs",
+    "chatbot",
+    "chat-widget",
+    "ai-assistant"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "bugs": {
+    "url": "https://github.com/Sattu2806/parley-js/issues"
+  }
+}

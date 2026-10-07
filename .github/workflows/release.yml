@@ -1,0 +1,40 @@
+# Publishes every package whose version in package.json isn't on npm yet.
+# Uses npm trusted publishing (OIDC): no npm token or 2FA code is stored here,
+# and each release gets a provenance attestation linking it to this commit.
+name: Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - run: npm install -g npm@latest
+      - run: npm ci
+      - run: npm run typecheck && npm test && npm run build
+      - name: Publish new versions
+        run: |
+          for dir in packages/widget packages/react; do
+            name=$(node -p "require('./$dir/package.json').name")
+            version=$(node -p "require('./$dir/package.json').version")
+            if npm view "$name@$version" version >/dev/null 2>&1; then
+              echo "$name@$version is already on npm — skipping"
+            else
+              echo "Publishing $name@$version"
+              npm publish --workspace "$dir"
+            fi
+          done
