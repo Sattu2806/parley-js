@@ -28,6 +28,7 @@ jobs:
       - run: npm run typecheck && npm test && npm run build
       - name: Publish new versions
         run: |
+          failed=0
           for dir in packages/widget packages/react; do
             name=$(node -p "require('./$dir/package.json').name")
             version=$(node -p "require('./$dir/package.json').version")
@@ -35,6 +36,7 @@ jobs:
               echo "$name@$version is already on npm — skipping"
             else
               echo "Publishing $name@$version"
-              npm publish --workspace "$dir" --loglevel verbose
+              npm publish --workspace "$dir" || { echo "::error::Publishing $name@$version failed"; failed=1; }
             fi
           done
+          exit $failed
